@@ -1,0 +1,36 @@
+2026-02-22 13:18:35 | [USER ADDITION] | User:  | New Pharmacist Account Created: Taufique
+2026-02-22 13:18:40 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 13:33:47 | [PHARMACY] | User: Taufique | Inventory Addition : Napa (Fever/Pain), Qty: 30
+2026-02-22 13:39:59 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 13:40:11 | [USER ADDITION] | User: Taufique | New User Account Created: Akash
+2026-02-22 13:40:37 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 13:41:10 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 13:41:57 | [DONOR] | User: Taufique | Registered Donor : Taufique
+2026-02-22 13:42:23 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 14:00:33 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 14:05:19 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 14:05:46 | [DONOR] | User: Taufique | Registered Donor : Taufique
+2026-02-22 14:06:42 | [DONOR] | User: Taufique | Registered Donor : Tanvir
+2026-02-22 14:07:22 | [DONOR] | User: Taufique | Registered Donor : Nusrat
+2026-02-22 14:08:00 | [DONOR] | User: Taufique | Registered Donor : Mahmud
+2026-02-22 14:18:46 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 14:29:18 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 14:31:39 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 14:32:05 | [BILLING] | User: Taufique | Invoiced : Akib
+2026-02-22 14:32:14 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 14:44:53 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 14:57:07 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 14:57:41 | [ISSUE] | User: Akash | Issued 2 units of Napa (Fever/Painkiller) to Patient: Mehedi
+2026-02-22 14:57:59 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 15:07:03 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 15:07:29 | [BILLING] | User: Taufique | Auto bill generated for Patient: Mehedi | Amount: 4
+2026-02-22 15:09:46 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 15:10:13 | [ISSUE] | User: Akash | Issued 2 units of Fexo (Antihistamine) to Patient: Akib
+2026-02-22 15:10:43 | [AUTHENTICATION] | User: Taufique | Successful Login
+2026-02-22 15:11:32 | [BILLING] | User: Taufique | Auto bill generated for Patient: Akib | Amount: 18
+2026-02-22 15:12:09 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 16:05:34 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 16:12:54 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 16:17:05 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 16:27:26 | [AUTHENTICATION] | User: Akash | Successful Login
+2026-02-22 16:28:10 | [ISSUE] | User: Akash | Issued 2 units of Fexo (Antihistamine) to Patient: Maruf
