@@ -1,6 +1,3 @@
-Absolutely! Here’s a polished, **copy-paste-ready README.md** version based on your premium style:
-
-````markdown
 # 🏥 LifeLine: Enterprise-Grade Bash Hospital Management
 
 **LifeLine** is a high-performance, lightweight Hospital and Pharmacy Management System (HPMS) engineered entirely in **Bash Shell Scripting**. By leveraging **Zenity** for a sophisticated GTK+ graphical interface and a structured **Flat-File Database architecture**, LifeLine delivers a robust management suite without the overhead of heavy SQL servers or runtime environments.
