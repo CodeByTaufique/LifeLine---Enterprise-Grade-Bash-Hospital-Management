@@ -67,7 +67,7 @@ sudo apt update && sudo apt install zenity coreutils zip -y
 ### 2. Repository Setup
 
 ```bash
-git clone https://github.com/your-username/LifeLine.git
+git clone https://github.com/CodeByTaufique/LifeLine.git
 cd LifeLine
 ```
 
