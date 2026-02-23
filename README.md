@@ -1,4 +1,4 @@
-# 🏥 LifeLine: Enterprise-Grade Bash Hospital Management
+# 🏥 LifeLine RxControl
 
 **LifeLine** is a high-performance, lightweight Hospital and Pharmacy Management System (HPMS) engineered entirely in **Bash Shell Scripting**. By leveraging **Zenity** for a sophisticated GTK+ graphical interface and a structured **Flat-File Database architecture**, LifeLine delivers a robust management suite without the overhead of heavy SQL servers or runtime environments.
 
@@ -81,6 +81,51 @@ chmod +x lifeLine.sh
 > **First-Run Configuration:** Upon initial execution, LifeLine triggers the **Admin Initialization Wizard**. This sets the master Pharmacist credentials. Do not lose these credentials, as they are required to provision Staff accounts.
 
 ---
+## 🔐 Authentication & Default Access
+
+For immediate system setup, use the following pre-configured credentials.
+
+> ⚠️ **Security Note:** It is highly recommended to use these credentials during your first session. Otherwise you can Login if you clone this project. If you copy the code only then you have to manually input all Medicine name & Blood Donors.
+
+### 👤 User Roles & Credentials
+
+| User Role               | Username    | Default Password        | Permissions                              |
+|-------------------------|------------|-------------------------|------------------------------------------|
+| Pharmacist (Admin)      | Taufique   | 1234                    | Full Access / Staff Management           |
+| Staff Member            | Akash      | 1234                    | Inventory & Dispensing Only              |
+
+---
+
+## 🛡️ Cloning & Security Protocol
+
+To maintain enterprise-grade security for **LifeLine RxControl**, the system employs a **"Pharmacist-First" Security Model**.
+
+### 🔒 Repository Cloning Protection
+
+If this project is cloned to a new environment:
+
+- The system remains in a **Locked State**
+- Access to the **Meds Control Dashboard** is restricted
+- A valid **Pharmacist login** must be verified before full access is granted
+
+---
+
+### 🏗️ Administrative Gatekeeping
+
+Only a user authenticated with the **Pharmacist password** can:
+
+- Add, Remove, or Modify Staff accounts  
+- Access the Controlled Substances database  
+- Generate and view sensitive Audit Logs  
+
+---
+
+### 👥 Staff Provisioning Policy
+
+- Staff members **cannot self-register**
+- New accounts must be manually created via: **Pharmacist**
+
+
 
 ## 📂 Data Schema (Filesystem)
 
