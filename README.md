@@ -61,7 +61,7 @@ LifeLine operates on a **Modular Scripting Design**, separating the business log
 Ensure your Linux distribution has the necessary GTK components:
 
 ```bash
-sudo apt update && sudo apt install zenity coreutils zip -y
+sudo apt update && sudo apt install zenity -y
 ````
 
 ### 2. Repository Setup
