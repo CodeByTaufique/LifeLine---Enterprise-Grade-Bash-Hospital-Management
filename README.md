@@ -1,4 +1,4 @@
-# 🏥 LifeLine RxControl
+# 🏥 LifeLine RxGuard
 
 **LifeLine** is a high-performance, lightweight Hospital and Pharmacy Management System (HPMS) engineered entirely in **Bash Shell Scripting**. By leveraging **Zenity** for a sophisticated GTK+ graphical interface and a structured **Flat-File Database architecture**, LifeLine delivers a robust management suite without the overhead of heavy SQL servers or runtime environments.
 
@@ -98,7 +98,7 @@ For immediate system setup, use the following pre-configured credentials.
 
 ## 🛡️ Cloning & Security Protocol
 
-To maintain enterprise-grade security for **LifeLine RxControl**, the system employs a **"Pharmacist-First" Security Model**.
+To maintain enterprise-grade security for **LifeLine RxGuard**, the system employs a **"Pharmacist-First" Security Model**.
 
 ### 🔒 Repository Cloning Protection
 
