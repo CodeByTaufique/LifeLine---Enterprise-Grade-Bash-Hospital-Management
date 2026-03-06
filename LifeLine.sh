@@ -185,7 +185,7 @@ generateBill() {
         if [ "$choice" = "Manual Invoice" ]; then
 
                 billInput=$(zenity --forms --title="Financial Billing" --text="Invoice" \
-			--width=550 --height=550 \
+						--width=550 --height=550 \
                         --add-entry="Patient Name" \
                         --add-list="Type" --list-values="Service|Medicine" \
                         --add-entry="Amount")
@@ -200,8 +200,8 @@ generateBill() {
                         --text="Enter Patient Name for Billing")
 
                 if [ -z "$patient" ]; then
-			 return
-		fi
+			 		return
+				fi
 
                 issued=$(grep -i "Issued .* to Patient: $patient$" "$LOG")
 
@@ -218,8 +218,8 @@ generateBill() {
                         price=$(grep "^$med|" "$MEDS" | cut -d '|' -f4)
 
                         if [ -z "$price" ]; then
-				continue
-			fi
+							continue
+						fi
 
                         cost=$((qty * price))
                         total=$((total + cost))
