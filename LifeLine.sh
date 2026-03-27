@@ -630,7 +630,7 @@ pharmaMenu() {
                         "7. USERS") registerAccount "User" ;;
                         "8. SEARCH") searchLog ;;
                         "9. BACKUPS")
-                                zip -r "$BACKUP/dbBackup$(date +%s).zip" "$DB" > /dev/null 2>&1
+                                zip -r "$BACKUP/dbBackup$(date +%s).zip" "$DB"
                                 zenity --info --text="Backup saved in $BACKUP"
                                 ;;
                         "10. UPDATE PASSWORD") changeUserPass ;;
