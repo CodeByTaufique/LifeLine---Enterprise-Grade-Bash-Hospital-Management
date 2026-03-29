@@ -365,7 +365,7 @@ issueMeds() {
         line=$(grep -i "^$target|" "$MEDS")
         if [[ -n "$line" ]]; then
                 n=$(echo "$line" | cut -d '|' -f1)
-                cat=$(echo "$line" | cut -d '|' -f2)
+                cate=$(echo "$line" | cut -d '|' -f2)
                 q=$(echo "$line" | cut -d '|' -f3)
                 r=$(echo "$line" | cut -d '|' -f6)
                 exp=$(echo "$line" | cut -d '|' -f5)
@@ -410,11 +410,11 @@ issueMeds() {
                 grep -v "^$n|" "$MEDS" > "$MEDS.tmp"
                 price=$(echo "$line" | cut -d '|' -f4)
                 rest=$(echo "$line" | cut -d '|' -f6)
-                echo "$n|$cat|$remaining|$price|$exp|$rest" >> "$MEDS.tmp"
+                echo "$n|$cate|$remaining|$price|$exp|$rest" >> "$MEDS.tmp"
                 mv "$MEDS.tmp" "$MEDS"
 
                 # Log and success message
-                writeLog "ISSUE" "Issued $askQty units of $n ($cat) to Patient: $patientName"
+                writeLog "ISSUE" "Issued $askQty units of $n ($cate) to Patient: $patientName"
                 zenity --info \
                         --title="✅ Transaction Approved" \
                         --text="Medicine: $n\nQuantity: $askQty\nPatient: $patientName\nInventory Updated."
@@ -531,13 +531,34 @@ requestMeds() {
 respondReq() {
         while true; do
                 req=$(grep '|DENIED$' "$EMERGENCY" | head -n 1)
+
                 if [[ -z "$req" ]]; then
-                        zenity --info --title="Requests" \
-                                --text="No pending restricted medicine requests."
-								
-						 zenity --text-info --title="Emergency Request History" \
-                                --width=600 --height=400 \
-                                --filename="$EMERGENCY"
+                        zenity --info \
+                                --title="📭 No Pending Requests" \
+                                --text="There are currently no restricted medicine requests waiting for approval." \
+                                --width=450 --height=200
+
+                      (
+                        while IFS='|' read -r date req patient med qty status || [ -n "$date" ]; do
+                                echo "$date"
+                                echo "$req"
+                                echo "$patient"
+                                echo "$med"
+                                echo "$qty"
+                                echo "$status"
+                        done < "$EMERGENCY"
+               		 )  | zenity --list \
+                      		--title="🚨 LifeLine Emergency Requests Dashboard" \
+                       		--text="📋 Pending & Past Restricted Medicine Requests" \
+                        	--width=900 \
+                        	--height=550 \
+                        	--column="Date" \
+                        	--column="Requested By" \
+                        	--column="Patient" \
+                        	--column="Medicine" \
+                        	--column="Quantity" \
+                        	--column="Status" \
+                        	--ok-label="🔍 Close"
                         break
                 fi
 
@@ -547,60 +568,102 @@ respondReq() {
                 med=$(echo "$req" | cut -d '|' -f4)
                 qty=$(echo "$req" | cut -d '|' -f5)
 
-                zenity --question --title="Restricted Medicine Request" \
-			--width=450 --height=350 \
-                        --text="Date      : $date
-Requested : $staff
-Patient   : $patient
-Medicine  : $med
-Quantity  : $qty
+                zenity --question \
+                        --title="🚨 Restricted Medicine Approval" \
+                        --width=500 --height=350 \
+                        --text="📅 Date       : $date
+👨‍⚕️ Requested By : $staff
+🧑 Patient    : $patient
+💊 Medicine   : $med
+📦 Quantity   : $qty
 
-Approve and ISSUE this medicine?" \
-                        --ok-label="ACCEPT & ISSUE" \
-                        --cancel-label="DENY"
-		                decision=$?
+━━━━━━━━━━━━━━━━━━━━━━
+Do you want to APPROVE and ISSUE this request?" \
+                        --ok-label="✅ APPROVE & ISSUE" \
+                        --cancel-label="❌ REJECT"
+
+                decision=$?
 
                 grep -v "^$req$" "$EMERGENCY" > "$EMERGENCY.tmp"
+
                 if [[ "$decision" -eq 0 ]]; then
                         line=$(grep -i "^$med|" "$MEDS")
+
                         if [[ -z "$line" ]]; then
-                                zenity --error --text="Medicine not found in inventory!"
+                                zenity --error \
+                                        --title="❌ Error" \
+                                        --text="Medicine not found in inventory!"
                                 echo "$req" >> "$EMERGENCY.tmp"
+
                         else
                                 stock=$(echo "$line" | cut -d '|' -f3)
+
                                 if [[ "$qty" -gt "$stock" ]]; then
-                                        zenity --error --text="Insufficient stock to issue!"
+                                        zenity --error \
+                                                --title="⚠️ Stock Error" \
+                                                --text="Insufficient stock to issue this request!"
                                         echo "$req" >> "$EMERGENCY.tmp"
+
                                 else
                                         remaining=$((stock - qty))
                                         grep -v "^$med|" "$MEDS" > "$MEDS.tmp"
+
                                         cate=$(echo "$line" | cut -d '|' -f2)
-										price=$(echo "$line" | cut -d '|' -f4)
-										exp=$(echo "$line" | cut -d '|' -f5)
-										rest=$(echo "$line" | cut -d '|' -f6)
-										echo "$med|$cate|$remaining|$price|$exp|$rest" >> "$MEDS.tmp"
+                                        price=$(echo "$line" | cut -d '|' -f4)
+                                        exp=$(echo "$line" | cut -d '|' -f5)
+                                        rest=$(echo "$line" | cut -d '|' -f6)
+
+                                        echo "$med|$cate|$remaining|$price|$exp|$rest" >> "$MEDS.tmp"
                                         mv "$MEDS.tmp" "$MEDS"
+
                                         echo "$date|$staff|$patient|$med|$qty|ISSUED" >> "$EMERGENCY.tmp"
 
                                         writeLog "ISSUE" \
                                                 "Issued $qty units of $med (Category : $cate) to Patient: $patient"
 
-                                        zenity --info --text="Medicine ISSUED successfully!"
+                                        zenity --info \
+                                                --title="✅ Request Approved" \
+                                                --text="Medicine successfully issued!\n\n💊 $med\n📦 Quantity: $qty\n🧑 Patient: $patient" \
+                                                --width=450 --height=250
                                 fi
                         fi
                 else
                         echo "$date|$staff|$patient|$med|$qty|REJECTED" >> "$EMERGENCY.tmp"
+
                         writeLog "PHARMACY" \
                                 "Restricted request REJECTED: $med Qty:$qty Patient:$patient"
-                        zenity --warning --text="Request rejected."
-                fi
-                mv "$EMERGENCY.tmp" "$EMERGENCY"
 
-                zenity --text-info --title="Emergency Request History" \
-                        --width=600 --height=400 \
-                        --filename="$EMERGENCY"
+                        zenity --warning \
+                                --title="❌ Request Rejected" \
+                                --text="The request has been rejected.\n\n💊 $med\n🧑 Patient: $patient" \
+                                --width=450 --height=250
+                fi
+
+                mv "$EMERGENCY.tmp" "$EMERGENCY"
+       			(
+    				while IFS='|' read -r date req patient med qty status || [ -n "$date" ]; do
+        				echo "$date"
+       					echo "$req"
+        				echo "$patient"
+        				echo "$med"
+        				echo "$qty"
+        				echo "$status"
+    				done < "$EMERGENCY"
+				) | zenity --list \
+    					--title="🚨 LifeLine Emergency Requests Dashboard" \
+    					--text="📋 Pending & Past Restricted Medicine Requests" \
+    					--width=900 \
+    					--height=550 \
+    					--column="Date" \
+    					--column="Requested By" \
+    					--column="Patient" \
+    					--column="Medicine" \
+    					--column="Quantity" \
+    					--column="Status" \
+    					--ok-label="🔍 Close"
         done
 }
+
 
 # Search in the log file to find desired activity or meds usage
 searchLog() {
@@ -705,7 +768,7 @@ pharmaMenu() {
 
                 choice=$(zenity --list \
                         --title="🩺 LifeLine Pharmacist Dashboard" \
-                        --text="Welcome, $activeUser\n\n$status\n\nSelect an operation:" \
+                        --text="Welcome, $activeUser\n\n$reqStatus\n\nSelect an operation:" \
                         --width=600 --height=600 \
                         --column="Module" --column="Description" \
                         "💊 MEDICINE MANAGEMENT" "Add / Update Medicines Inventory" \
