@@ -77,7 +77,7 @@ expiryStatus() {
 lowStock() {
         local alertMsg=""
         while IFS='|' read -r name category qty price exp rest; do
-                if [[ -n "$qty" ] && [ "$qty" -lt 5 ]]; then
+                if [[ -n "$qty" ]] && [[ "$qty" -lt 5 ]]; then
                         alertMsg="${alertMsg}Item: $name (Remaining : $qty)\n"
                 fi
         done < "$MEDS"
@@ -707,7 +707,7 @@ registerAccount() {
         role=$(zenity --list \
                 --title="Select Account Type" \
                 --column="Role" \
-                "User" \
+                "Staff" \
                 "Pharmacist")
 
         if [[ -z "$role" ]]; then
