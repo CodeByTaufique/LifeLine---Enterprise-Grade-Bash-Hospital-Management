@@ -146,9 +146,14 @@ manageDonors() {
           	  --add-entry="Phone Number" \
            	 --add-calendar="Registration Date")
 
+		if [[ -z "$donorInput" ]]; then
+   			 zenity --error --text="All fields are required!"
+    		 return
+		fi
+			 
     	if [[ -n "$donorInput" ]]; then
         	echo "$donorInput" >> "$DONOR"
-        	bloodType=$(echo "$donorInput" | cut -d '|' -f2 | tr -d ',')
+        	bloodType=$(echo "$donorInput" | cut -d '|' -f2)
         	found=0
       		tempFile="blood_temp.txt" > "$tempFile"
 
@@ -190,7 +195,11 @@ generateBill() {
                         --add-entry="Patient Name" \
                         --add-list="Type" --list-values="Service|Medicine" \
                         --add-entry="Amount")
-
+				if [[ -z "$billInput" ]]; then
+    					zenity --error --text="All fields are required!"
+    					return
+				fi
+						
                 if [[ -n "$billInput" ]]; then
                         echo "$(date +%F)|$billInput" >> "$BILL"
                         writeLog "BILLING" "Invoiced : $(echo "$billInput" | cut -d '|' -f1)"
@@ -686,8 +695,8 @@ searchLog() {
                 grep -i "$keyword" "$LOG" | while IFS='|' read -r date user action details
                 do
                         echo "$date"
-                        echo "$user"
                         echo "$action"
+                        echo "$user"
                         echo "$details"
                 done
         ) | zenity --list \
